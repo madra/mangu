@@ -1,13 +1,18 @@
 <?php
 require_once('class.inc.php');
-//print_r($_REQUEST);
-//var_dump($_GET['url']);
     if(isset($_GET['url']))
     {
-    Util::checkUrl($_GET['url']);
+    $links = unserialize(ALLOWED_PAGES);
+        if(in_array($_GET['url'],$links))
+        {
+        require_once(''.$_GET['url'].'.php');
+        }else
+        {
+        require_once('404.php');
+        }
     }else
     {
-    Util::relocate("404.php");
+    require_once('404.php');
     }
 ?>
 
