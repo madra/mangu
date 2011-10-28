@@ -37,7 +37,7 @@ $this->bodyOnload = null;
 
         $this->api = new Api();
 
-        $this->default_css = null;
+        $this->default_css = true;
 
         $this->errors = array();
 
@@ -55,9 +55,9 @@ $this->bodyOnload = null;
 
 
         //for caching
-        $header;
-        $footer;
-        $body;
+        $this->header = null;
+        $this->footer=null;
+        $this->body=null;
 		//custom user display
 		$this->custom_display = null;
 
@@ -176,8 +176,7 @@ public function set_normal_quick_search()
     }
 
     public function unset_default_css() {
-        $this->default_css = 1;
-
+        $this->default_css = null;
     }
 
     #set the errors for the page

@@ -48,32 +48,31 @@ echo"<meta name='description' content='{$ui->description}'>";
 
 
 #load the default css
-if($ui->default_css == null)
-{
-echo"<link href='".BASE_PATH."/css/ui.css' rel='stylesheet' type='text/css' />";
-}
-
+            if($ui->default_css)
+            {
+            echo"<link href='".BASE_PATH."/css/ui.css' rel='stylesheet' type='text/css' />";
+            }
 
 
             #set the css
             while (list($key,$value) = each($ui->css)) {
-                echo
-                "
-<link href='".BASE_PATH."/css/$value.css' rel='stylesheet' type='text/css' />
-                    ";
+                if(!empty($value))
+                    {
+                     echo "<link href='".BASE_PATH."/css/$value.css' rel='stylesheet' type='text/css' />";
+                    }
             }
 
 
 
 
 
-if($ui->default_js == null){
-echo '<script src="'.BASE_PATH.'js/jquery_1.6.4.min.js" type="text/javascript"></script>';
-echo '<script src="'.BASE_PATH.'js/modernizr-2.0.6.min.js" type="text/javascript"></script>';
-echo '<script src="'.BASE_PATH.'js/script.js" type="text/javascript"></script>';
-echo '<script src="'.BASE_PATH.'js/plugins.js" type="text/javascript"></script>';
-echo '<script src="'.BASE_PATH.'js/ui.js" type="text/javascript"></script>';
-}
+                if($ui->default_js == null){
+                        echo '<script src="'.BASE_PATH.'js/jquery_1.6.4.min.js" type="text/javascript"></script>';
+                        echo '<script src="'.BASE_PATH.'js/modernizr-2.0.6.min.js" type="text/javascript"></script>';
+                        echo '<script src="'.BASE_PATH.'js/script.js" type="text/javascript"></script>';
+                        echo '<script src="'.BASE_PATH.'js/plugins.js" type="text/javascript"></script>';
+                        echo '<script src="'.BASE_PATH.'js/ui.js" type="text/javascript"></script>';
+                }
 
 #set the javascript
 while (list($key,$value) = each($ui->top_js)) {
