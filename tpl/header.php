@@ -21,36 +21,11 @@ if(!empty($ui->title))
     echo"<title>{$ui->title}</title>";
     }else
     {
-      echo"<title>".APP_NAME."</title>";
+    echo"<title>".APP_NAME."</title>";
     }
-#set description
-if($ui->description) {
-echo"<meta name='description' content='{$ui->description}'>";
-            }
-
-			#set so google,bing,msn..etc does not index
-            if(!$ui->seo)
-			{
-
-			 echo
-			 '
-			 <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-             <meta name="robots" content="noodp,noydir" />';
-			 }else
-                {
-                  echo
-			 '
-			 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">';
-
-                }
-
-
-
-
-#load the default css
-            if($ui->default_css)
-            {
-            echo"<link href='".BASE_PATH."/css/ui.css' rel='stylesheet' type='text/css' />";
+        #set description
+        if($ui->description) {
+            echo"<meta name='description' content='{$ui->description}'>";
             }
 
 
@@ -58,34 +33,22 @@ echo"<meta name='description' content='{$ui->description}'>";
             while (list($key,$value) = each($ui->css)) {
                 if(!empty($value))
                     {
-                     echo "<link href='".BASE_PATH."/css/$value.css' rel='stylesheet' type='text/css' />";
+                     echo "<link href='".BASE_PATH."css/$value.css' rel='stylesheet' type='text/css' />";
                     }
             }
 
 
 
 
+        #set the javascript
+        while (list($key,$value) = each($ui->top_js)) {
+                        echo
+                        "
+         <script src='".STATIC_BASE_PATH."js/$value.js' type='text/javascript'></script>
+                            ";
+                    }
 
-                if($ui->default_js == null){
-                        echo '<script src="'.BASE_PATH.'js/jquery_1.6.4.min.js" type="text/javascript"></script>';
-                        echo '<script src="'.BASE_PATH.'js/modernizr-2.0.6.min.js" type="text/javascript"></script>';
-                        echo '<script src="'.BASE_PATH.'js/script.js" type="text/javascript"></script>';
-                        echo '<script src="'.BASE_PATH.'js/plugins.js" type="text/javascript"></script>';
-                        echo '<script src="'.BASE_PATH.'js/ui.js" type="text/javascript"></script>';
-                }
 
-#set the javascript
-while (list($key,$value) = each($ui->top_js)) {
-                echo
-                "
- <script src='".STATIC_BASE_PATH."js/$value.js' type='text/javascript'></script>
-                    ";
-            }
-
-if($ui->custom_display)
-{
-echo $ui->custom_display;
-}
 
 
 if($ui->png_fix)
@@ -94,10 +57,10 @@ if($ui->png_fix)
 echo
 '
     <!--[if lt IE 7]>
-    <script language="javascript" type="text/javascript" src="'.BASE_PATH.'/js/ifixpng.js"></script>
+    <script language="javascript" type="text/javascript" src="'.BASE_PATH.'js/ifixpng.js"></script>
 	<script type="text/javascript">
 	 jQuery(function($){
-	 $.ifixpng("'.BASE_PATH.'/images/pixel.gif");
+	 $.ifixpng("'.BASE_PATH.'images/pixel.gif");
 	 $(" .iepngfix").ifixpng();
 	 });
 	</script>

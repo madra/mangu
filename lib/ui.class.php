@@ -22,35 +22,35 @@ $this->benchmarking = false;
         $this->title = $title;
         $this->description = $description;
         $this->links = array();
+         $this->bodyOnload = null;
 
-$this->bodyOnload = null;
-        //javascript variables
+
+        /**
+        *javascript variables
+        * we display javascript at the bottom by defauls
+        * we also have default javascript values
+        */
         $this->js = array();
-        $this->top_js = array();
-        $this->default_js = null;
-        $this->js_ie = array();
+        $this->default_js = true;
+        $this->top_js = array('jquery_1.6.4.min','modernizr-2.0.6.min','script','plugins','ui');
 
 
-        $this->css = array();
+
+        $this->default_css = true;
+        $this->css = array("ui");
 
 
 
         $this->api = new Api();
 
-        $this->default_css = true;
 
         $this->errors = array();
 
         $this->cache = new Cache();
         $sc = $_SERVER['SCRIPT_NAME'];
-        $this->scriptname = strtolower(substr(strrchr($sc, "/"),1));
+        $this->scriptname = strtolower(substr(strrchr($sc,DS),1));
 
         $this->png_fix = null;
-
-
-
-        $this->wrapper_width = "960px";
-        $this->header = true;
 
 
 
@@ -61,21 +61,15 @@ $this->bodyOnload = null;
 		//custom user display
 		$this->custom_display = null;
 
-     //for testing
-  if(DEVELOPMENT_ENVIRONMENT)
-  {
-  $this->test = new Test();
-  }
 
-
-    //generate the .htaccess file
-    if(GENERATE_HTACCESS)
+        //generate the .htaccess file
+        if(GENERATE_HTACCESS)
         {
         $this->generate_htaccess();
         }
 
-//variable that controlls display
-$this->display = true;
+    //variable that controlls display
+    $this->display = true;
 }
 
 static function get_ui()
@@ -115,34 +109,6 @@ if($width)
 
 }
 
-#apps
-public function set_app_js($css) {
-        $this->app_js = $css;
-    }
-
-public function set_app_css($css) {
-        $this->app_css = $css;
-
-    }
-
-public function set_normal_quick_search()
-{
- $this->home_header = 1;
-}
-
-    function set_admin($a = null) {
-        if(!$a == null) {
-            $this->admin = true;
-        }
-    }
-
-
-
-
-
-
-
-
 
     #set the javascript for ie
     public function set_javascript_ie($links) {
@@ -157,33 +123,38 @@ public function set_normal_quick_search()
     }
 
        #set javascript to be include at the top
-          public function set_top_javascript($js) {
-        $this->top_js = $js;
+          public function set_top_javascript($js = null) {
+            //if we are allowing defualt javascript files
+            if($this->default_js && is_array($js))
+            {
+            $js =array_merge($js,$this->default_js);
+            }elseif(is_array($js))
+            {
+              $this->top_js = $js;
+            }
           }
 
 
  #unset the default javascript files
     public function unset_default_javascript() {
-        $this->default_js = 1;
-
+        $this->default_js = false;
     }
 
     #set the stylesheets
     #all stylesheets resided in the css folder
-    public function set_css($css) {
-        $this->css = $css;
-
+    public function set_css($css = null) {
+        if($this->default_css && is_array($css))
+            {
+            $this->css = array_merge($css,$this->css);
+            }elseif(is_array($css))
+            {
+            $this->css = $css;
+            }
     }
 
     public function unset_default_css() {
         $this->default_css = null;
     }
-
-    #set the errors for the page
-    public function set_errors($errors) {
-        $this->errors[] =  $errors;
-    }
-
 
 
 
