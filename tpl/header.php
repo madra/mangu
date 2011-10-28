@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <?php
 echo
-'<link rel="SHORTCUT ICON" href="'.STATIC_BASE_PATH.'images/fav.png">';
+'<link rel="SHORTCUT ICON" href="'.STATIC_BASE_PATH.'images/fav.jpg">';
 #set the title
 if(!empty($ui->title))
     {
