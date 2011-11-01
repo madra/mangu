@@ -4,7 +4,7 @@ $form = new Form();
 $form->tabs(array('tab1'=>'tab1','tab2'=>'tab1'));
 $form->startForm();
 $form->label('text','textInput');
-$form->textInput();
+$form->textInput($array = array('name'=>'textInput','class'=>'textInput'));
 $form->label('text','textInput');
 $form->selectBox();
 $form->textArea();
