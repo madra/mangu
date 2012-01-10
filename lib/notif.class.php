@@ -59,39 +59,23 @@ class Notif
     private function format_notice($type,$msg,$close = null)
     {
     $divid = md5(uniqid(rand(), true));
-    $style = array('','noticefail','noticewarn','noticesuccess','noticestatus','noticeblack','noticefade','noticesoft');
-       if($type == 6)
-	{
-echo
-"
-<div id='$divid' class='{$style[$type]}'>
- $msg
-<script type='text/javascript'>
-new Effect.Fade('$divid',{ fps: 10, duration: 5 });
-</script>
-</div>
-";
-}else
-{
-    echo
-    "
-    <div class='noticecontainer'><div id='$divid' class='{$style[$type]}' style='padding:1.5%;'>
-     ";
-
+    $style = array('','error','warning','success','info');
+    if(array_key_exists($type,$style))
+        {
+    echo "<div class='noticecontainer'><div id='$divid' class='alert-message {$style[$type]}'>";
     if(!$close)
     {
     echo
     "
-    <div class='noticeimsgdiv'>
-    <img id='noticeimsg' src='".BASE_PATH."images/close2.png' class='iepngfix'  Onclick=$('#$divid').hide()></img>
-    </div>
+    <a class='close' href='#' OnClick=$('#$divid').remove()>x</a>
     ";
     }
 
     echo
     "
+    <p>
     $msg
-
+    </p>
     </div></div>
     ";
     }

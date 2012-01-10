@@ -6,6 +6,6 @@
     $ui->header();
     $ui->body('index');
     $ui->footer();
-   // $ui->benchmark();
+ $ui->benchmark();
 ?>
 
