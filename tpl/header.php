@@ -51,21 +51,14 @@ if(!empty($ui->title))
 
 
 
-if($ui->png_fix)
-    {
-//png fix
+
 echo
 '
-    <!--[if lt IE 7]>
-    <script language="javascript" type="text/javascript" src="'.BASE_PATH.'js/ifixpng.js"></script>
-	<script type="text/javascript">
-	 jQuery(function($){
-	 $.ifixpng("'.BASE_PATH.'images/pixel.gif");
-	 $(" .iepngfix").ifixpng();
-	 });
-	</script>
-		<![endif]-->';
-}
+  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="'.BASE_PATH.'js/html5.js"></script>
+    <![endif]-->
+';
 echo'</head>';
 
             //guys at yaho say this helps

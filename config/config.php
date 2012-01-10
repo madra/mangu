@@ -25,4 +25,5 @@ define('STATIC_BASE_PATH',BASE_PATH);
 
 define('ALLOWED_PAGES',serialize(array ('index')));
 define('APP_NAME','mangu');
+define('VERSION',0.2);
 

@@ -30,14 +30,15 @@ $this->benchmarking = false;
         * we display javascript at the bottom by defauls
         * we also have default javascript values
         */
-        $this->js = array();
+
+        $this->js = array('bootstrap-modal','bootstrap-alerts','bootstrap-twipsy','bootstrap-popover','bootstrap-dropdown','bootstrap-scrollspy','bootstrap-tabs','bootstrap-buttons');
         $this->default_js = true;
-        $this->top_js = array('jquery_1.6.4.min','modernizr-2.0.6.min','script','plugins','ui');
+        $this->top_js = array('jquery_1.7.1.min','html5','ui');
 
 
 
         $this->default_css = true;
-        $this->css = array("ui");
+        $this->css = array('ui','bootstrap');
 
 
 
