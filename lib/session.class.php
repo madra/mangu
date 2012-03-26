@@ -10,6 +10,16 @@ class Session
 	{
         $this->sess_conn = new Draql('sessions');
 
+
+session_set_save_handler(
+    array($this,'open'),
+    array($this,'close'),
+    array($this,'read'),
+    array($this,'write'),
+    array($this,'destroy'),
+    array($this,'gc')
+);
+@session_start();
 	}
 	###
 
@@ -33,11 +43,9 @@ public function get($name)
 
 public function get_userid()
 {
-
-
-if($this->get('gaaj9nlh1ki4tpcbjlsigge8r0'))
+if($this->get(SESS_KEY))
 {
-return $this->get('gaaj9nlh1ki4tpcbjlsigge8r0');
+return $this->get(SESS_KEY);
 }else
 {
 return null;
@@ -85,9 +93,9 @@ public function close()
 }
 
 
-public function read($sess_id)
+public function read($this_id)
 {
-$id = $this->sess_conn->find('sess_data',"sess_id = '$sess_id'");
+$id = $this->sess_conn->find('sess_data',"sess_id = '$this_id'");
 if($id)
 {
 $read_sess_data = $id[1]['sess_data'];
@@ -99,25 +107,25 @@ return false;
 }
 
 
-public function write($sess_id,$data)
+public function write($this_id,$data)
 {
-$id = $this->sess_conn->find('sess_id',"sess_id = '$sess_id'");
+$id = $this->sess_conn->find('sess_id',"sess_id = '$this_id'");
 if($id)
 {
 //optimise the table
 
-$wrt = $this->sess_conn->find_by_sql("UPDATE sessions set sess_data = '$data',sess_last_acc = NOW() WHERE sess_id = '$sess_id'");
+$wrt = $this->sess_conn->find_by_sql("UPDATE sessions set sess_data = '$data',sess_last_acc = NOW() WHERE sess_id = '$this_id'");
 }else
 {
-$wrt = $this->sess_conn->insert("'$sess_id',NOW(),NOW(),'$data'",'sess_id,sess_start,sess_last_acc,sess_data');
+$wrt = $this->sess_conn->insert("$this_id,NOW(),NOW(),$data",'sess_id,sess_start,sess_last_acc,sess_data');
 }
 return true;
 }
 
 
-public function destroy($sess_id)
+public function destroy($this_id)
 {
-$del = $this->sess_conn->find_by_sql("delete sessions from sessions where sess_id = '$sess_id'");
+$del = $this->sess_conn->find_by_sql("delete sessions from sessions where sess_id = '$this_id'");
 session_destroy();
 return true;
 }
@@ -132,11 +140,7 @@ then the current time, minus the TTL value:
 
 public function gc($ttl)
 {
-
 $end = date('Y-m-d H:i:s', time() - $ttl);
-
-
-
 $del = $this->sess_conn->find_by_sql("delete sessions from sessions where sess_last_acc < '$end' ");
 //optimise the table
 $this->sess_conn->find_by_sql('OPTIMIZE table sessions');
@@ -145,9 +149,7 @@ return true;
 
 public function __destruct()
 {
-/*
-  session_write_close();
-*/
+session_write_close();
 }
 
 

@@ -301,10 +301,12 @@ echo
 <IfModule mod_rewrite.c>
   Options +FollowSymlinks
   RewriteEngine on
-  RewriteRule ^([a-zA-Z0-9_-]+)$  boot_strap.php?url=$1
-  RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$  boot_strap.php?url=$1&url2=$2
+  RewriteRule ^([a-zA-Z0-9_-]+)$  boot_strap.php?url=$1 [L,QSA]
+  RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$  boot_strap.php?url=$1&url2=$2 [L,QSA]
+  RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$/([a-zA-Z0-9_-]+)$   boot_strap.php?url=$1&url2=$2&url3=$3 [L,QSA]
   RewriteRule (cmd|root)\.exe - [F,E=dontlog:1]
-</IfModule>';
+</IfModule>
+';
 
 
 

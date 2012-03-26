@@ -1,7 +1,7 @@
 <?php
 class Ui {
 #	internal variables
-
+ private static $_instance;
 #	Constructor
 #initiate the page title
     function __construct ($title = null,$seo = null,$description = null) {
@@ -38,7 +38,7 @@ $this->benchmarking = false;
 
 
         $this->default_css = true;
-        $this->css = array('ui','bootstrap');
+        $this->css = array('ui','bootstrap','icon');
 
 
 

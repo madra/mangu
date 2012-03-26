@@ -17,48 +17,20 @@ class Form
 *
 *
 */
-public function startForm($action = null,$method = null,$enctype = null,$id = null,$target= null,$style = null)
+public function startForm($options = null)
 {
 
 $str = '<form ';
 
 
-if($id)
+if($options && count($options) > 0)
     {
-    $str .="id='$id'";
-    }
-
-if($style)
+    foreach ($options as $key => $value)
     {
-    $str .="style='$style'";
+    # code...
+    $str .= " $key = '$value' ";
     }
-
-
-
-if($action)
-    {
-     $str .="action='$action'";
     }
-
-
-
-
-if($method)
-    {
-     $str .="method='$method'";
-    }
-
-
-
-if($enctype)
-{
- $str .="enctype='$enctype'";
-}
-
-if($target)
-{
-$str .= "target='$target' ";
-}
 
 $str .= ' />';
 echo $str;

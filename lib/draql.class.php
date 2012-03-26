@@ -88,17 +88,13 @@ return $this->attributes["'$attribute'"];	# code...
 
 public function clean_string($input)
 {
-
-
 //clean the string
-
-
-
-		$input = mysql_real_escape_string($input);
-
-		return $input;
-
-
+$input = stripslashes($input);
+if(!is_numeric($input))
+    {
+    $input = '"'.mysql_real_escape_string($input).'"';
+    }
+return $input;
 }
 
 
@@ -226,7 +222,7 @@ elseif(preg_match('/[0-9]+$/',$records))
 $this->sql = ' select *  from '.$this->table.' where id = '.$this->clean_string($records);
 }else
 {
-$this->sql = ' select '. $this->table .'.'.$this->clean_string($params['records'][0] ) .' from '. $this->table;
+$this->sql = ' select '. $this->table .'.'.$params['records'][0].' from '. $this->table;
 }
 }
 
@@ -243,10 +239,10 @@ for($n = 0;$n < count($params['records']);$n++)
 {
 if($n == 0)
 {
-$this->sql  .=  ''. $this->table  .'.'. $this->clean_string($params['records'][$n]) ;
+$this->sql  .=  ''. $this->table  .'.'.$params['records'][$n];
 }else
 {
-$this->sql  .=  ','. $this->table  .'.'. $this->clean_string($params['records'][$n]) ;
+$this->sql  .=  ','. $this->table  .'.'.$params['records'][$n];
 }
 }
 $this->sql .= ' from '. $this->table ;
@@ -260,12 +256,11 @@ $this->sql .= ' from '. $this->table ;
 list($conditions) = $params['conditions'];
 
 
-
-
-
 if(count($params['conditions']) == 1 && strlen($conditions) > 0)
 {
 //we now perform the query
+//break down the select arguments and clean them for attacks
+$params['conditions'][0] = $this->prepareFindStatment($params['conditions'][0]);
 $this->sql  .= " where {$this->table}.{$params['conditions'][0]}";
 }
 elseif(count($params['conditions']) > 1)
@@ -273,6 +268,8 @@ elseif(count($params['conditions']) > 1)
 $this->sql .= " where";
 for($n = 0;$n < count($params['conditions']);$n++)
 {
+//break down the select arguments and clean them for attacks
+$params['conditions'][$n] = $this->prepareFindStatment($params['conditions'][$n]);
 if($n == 0)
 {
 $this->sql  .= "  {$this->table}.{$params['conditions'][$n]}";
@@ -284,6 +281,7 @@ $this->sql  .= " AND {$this->table}.{$params['conditions'][$n]}";
 }
 
 
+//Util::pre($this->sql);
 //if the the third parameter is an array we raise an error
 //order by should be a string eg order by id
 
@@ -402,11 +400,11 @@ $this->sql = 'select *  from'. $this->table;
 }
 elseif(preg_match('/[0-9]+$/',$records))
 {
-$this->sql = 'select *  from '. $this->table .'where id ='.  $this->clean_string($records);
+$this->sql = 'select *  from '. $this->table .'where id ='.$records;
 }else
 {
 
-$this->sql = 'select  DISTINCT '. $this->table .'.'. $this->clean_string($params['records'][0])  .' from '. $this->table;
+$this->sql = 'select  DISTINCT '. $this->table .'.'.$params['records'][0]  .' from '. $this->table;
 
 }
 
@@ -423,11 +421,11 @@ for($n = 0;$n < count($params['records']);$n++)
 {
 if($n == 0)
 {
-$this->sql  .=  ''. $this->table  .'.'. $this->clean_string($params['records'][$n]) ;
+$this->sql  .=  ''. $this->table  .'.'.$params['records'][$n];
 
 }else
 {
-$this->sql  .=  ','. $this->table  .'.'. $this->clean_string($params['records'][$n]) ;
+$this->sql  .=  ','. $this->table  .'.'.$params['records'][$n];
 }
 }
 
@@ -548,6 +546,23 @@ $this->errors["database_query_error"] = mysql_error();
 }
 }
 
+//prepare the find or select to prevent sql injection
+private function prepareFindStatment($data)
+{
+/*
+Util::pre($data);
+$matches = array('AND','and','OR','or','=');
+foreach ($matches as $key => $value)
+{
+if(preg_match('/ '.$value.' /',$data))
+    {
+
+
+    }
+}
+*/
+return $data;
+}
 
 //method to update data in  the database
 public function update($args_columns,$args_values,$args_parameters)
@@ -563,6 +578,9 @@ if($args_columns != null)
   $params['conditions'] = explode(",",$args_parameters);
   #the values to be inserted in the parameters
   $params['values'] = explode(",",$args_values);
+
+ //Util::pre($params['values']);
+
   #the parameters to be updated
   $params['columns'] = explode(",",$args_columns);
 
@@ -580,14 +598,14 @@ return false;
 //first value for first column,second value for second column and so on
 for($v = 0;$v < count($params['columns']);$v++)
 {
-
+$params['values'][$v] = str_replace('\'','',$params['values'][$v]);
 //if the its the second value we add a ,
 if($v > 0)
 {
- $this->sql .=  ' , '. $params['columns'][$v] .' = \''.$this->clean_string($params['values'][$v]).'\'';
+ $this->sql .=  ' , '. $params['columns'][$v] .' ='.$this->clean_string($params['values'][$v]).'';
 }else
 {
- $this->sql .= ''. $params['columns'][$v] .' = \''.$this->clean_string($params['values'][$v]).'\'';
+ $this->sql .= ''. $params['columns'][$v] .' = '.$this->clean_string($params['values'][$v]).'';
 }
 }
 
@@ -716,7 +734,7 @@ if($v == 0)
 
 $this->sql  .= " )";
 
-//var_dump($this->sql);
+
 
 if($result = mysql_query($this->sql))
 {
@@ -796,12 +814,7 @@ if(count($params['values']) >= 1)
 {
 for($v = 0;$v < count($params['values']);$v++)
 {
-$values = $params['values'][$v];
-//$values = ''.mysql_real_escape_string($params['values'][$v]).'';
-//$values = ''.addslashes($params['values'][$v]).'';
-//$values = ''.str_replace(' " '," ' ",$params['values'][$v]).'';
-
-
+$values = $this->clean_string($params['values'][$v]);
 if($v == 0)
 {
 $this->sql  .=  $values;
@@ -815,19 +828,14 @@ $this->sql  .=  ','. $values;
 $this->sql .= ' ) ';
 }
 
-
-
-//$this->sql = @sprintf($this->sql);
-
-
-
-
+//Util::pre($this->sql);
 
 if($result = mysql_query($this->sql))
 {
+$id = mysql_insert_id();
 if(mysql_affected_rows() > 0)
 {
-return true;
+return $id;
 }else
 {
 return false;
@@ -870,19 +878,19 @@ else
 {
 
 //clean the damn strings
-$args_parameters = $this->clean_string("$args_parameters");
+//$args_parameters = $this->clean_string("$args_parameters");
 
 #the parameters to update
 $params['params'] = explode(",",$args_parameters);
 
 
 //build the query
-$this->sql = "select COUNT(*) FROM {$this->table} where {$params['params'][0]} = {$params['params'][1]} ";
+$this->sql = "select COUNT(*) FROM {$this->table} where {$params['params'][0]} = ".$this->clean_string($params['params'][1]);
 }
 
 
 //we now perform the query
-$this->query = $this->clean_string("{$this->sql}");
+$this->query = $this->sql;
 
 //if the query is executed
 if($result = mysql_query($this->query))
@@ -917,8 +925,8 @@ public function remove($args_parameters,$args_values)
 {
 
 //clean the damn strings
-$args_parameters = $this->clean_string("$args_parameters");
-$args_values = $this->clean_string("$args_values");
+//$args_parameters = $this->clean_string("$args_parameters");
+//$args_values = $this->clean_string("$args_values");
 
 
 //cannot insert nothing
@@ -948,15 +956,15 @@ for($v = 0;$v < count($params['params']);$v++)
 
 if($v > 0 )
 {
-$this->sql .= " AND {$this->table}.{$params['params'][$v]} = {$params['values'][$v]} ";
+$this->sql .= " AND {$this->table}.{$params['params'][$v]} = ".$this->clean_string($params['values'][$v]);
 }else
 {
-$this->sql .= "  {$this->table}.{$params['params'][$v]} = {$params['values'][$v]} ";
+$this->sql .= "  {$this->table}.{$params['params'][$v]} =".$this->clean_string($params['values'][$v]);
 }
 }
 
 //we now perform the query
-$this->query = $this->clean_string("{$this->sql}");
+$this->query = $this->sql;
 
 
 
@@ -986,6 +994,8 @@ $this->errors["database_insert_error"] = "cannot remove empty data";
 
 function __destruct()
 {
+if(DEVELOPMENT_ENVIRONMENT)
+{
 if(is_array($this->errors))
     {
     $notif = notif::get_notif();
@@ -995,8 +1005,7 @@ if(is_array($this->errors))
     }
     $notif->show_notif();
     }
-
-
+}
 }
 
 

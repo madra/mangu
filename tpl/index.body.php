@@ -3,6 +3,12 @@
 echo "<h1>Hello  mangu!!! ".VERSION." </h1>";
 ?>
 
+<div class="icons-color">
+      <span class="icon icon-triangle-n"/>
+      <span class="icon icon-triangle-s"/>
+</div>
+<span class="icon32 icon-black icon-folder-collapsed"></span>
+
 <div class="page-header"><h4>Notification messages</h4></div>
 <?php
 $notif = Notif::get_notif();
