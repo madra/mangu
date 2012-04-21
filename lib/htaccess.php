@@ -298,6 +298,10 @@ FileETag None";
 # FollowSymLinks must be enabled for this to work.
 echo
 '
+RewriteEngine on
+RewriteRule ^(.*)\.[\d]{10}\.(css|js)$ $1.$2 [L]
+
+
 <IfModule mod_rewrite.c>
   Options +FollowSymlinks
   RewriteEngine on

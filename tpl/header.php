@@ -29,11 +29,11 @@ if(!empty($ui->title))
             }
 
 
-            #set the css
+          #set the css
             while (list($key,$value) = each($ui->css)) {
                 if(!empty($value))
                     {
-                     echo "<link href='".BASE_PATH."css/$value.css' rel='stylesheet' type='text/css' />";
+                     echo "<link href='".$ui->auto_version("css/$value.css")."' rel='stylesheet' type='text/css' />";
                     }
             }
 
@@ -42,14 +42,8 @@ if(!empty($ui->title))
 
         #set the javascript
         while (list($key,$value) = each($ui->top_js)) {
-                        echo
-                        "
-         <script src='".STATIC_BASE_PATH."js/$value.js' type='text/javascript'></script>
-                            ";
+echo" <script type='text/javascript' src='".$ui->auto_version("js/$value.js")."'></script>";
                     }
-
-
-
 
 
 echo

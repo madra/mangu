@@ -243,6 +243,20 @@ private function generate_htaccess()
   fclose($fp);
 }
 
+function auto_version($file)
+{
+//var_dump($file);
+//Util::pre($_SERVER['DOCUMENT_ROOT']);
+
+//check if the file exists..if it doesnt we return
+  if(!file_exists(BASE_DIR . $file))
+    return  STATIC_BASE_PATH.''.$file;
+
+
+  $mtime = filemtime(BASE_DIR . $file);
+  return  STATIC_BASE_PATH.''.preg_replace('{\\.([^./]+)$}', ".$mtime.\$1", $file);
+}
+
 }
 ###
 
