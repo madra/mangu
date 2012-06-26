@@ -32,3 +32,12 @@ define('APP_NAME','mangu');
 define('VERSION',0.2);
 define('SESS_KEY',md5(BASE_PATH));
 
+
+//javascript constants
+echo
+'
+<script type="text/javascript">
+var BASE_PATH = "'.BASE_PATH.'";
+var SERVER_PATH = "'.BASE_PATH.'server/ma";
+</script>
+';

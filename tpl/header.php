@@ -55,7 +55,7 @@ echo
 ';
 echo'</head>';
 
-            //guys at yaho say this helps
+            //guys at yahoo say this helps
             //to make the website faster
             flush();
 echo'<body>';
