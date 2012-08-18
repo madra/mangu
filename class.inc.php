@@ -9,6 +9,7 @@ ini_set('memory_limit', '94m');
 if (DEVELOPMENT_ENVIRONMENT == true) {
 	error_reporting(E_ALL);
 	ini_set('display_errors','On');
+    ini_set('memcache_debug ','On');
    // set_error_handler("manguErrorHandler");
 } else {
 	error_reporting(E_ALL);

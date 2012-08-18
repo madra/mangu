@@ -44,7 +44,7 @@ elseif(DB_DRIVER == 'postgre')
 ob_start();
 echo "<b><h4>Database Error</h4></b>";
 echo $databaseErrorMessage . " <br /> ";
-echo " <pre> Code : " .$e->getCode() ."<br /></pre><pre>" ."File :"  .$e->getFile() ."<br /></pre><pre>" ."Line : " .$e->getLine() ."<br/></pre>";	# code...
+echo "Code : " .$e->getCode() ."<br />" ."File :"  .$e->getFile() ."<br />" ."Line : " .$e->getLine() ."<br/>";	# code...
 $msg = ob_get_contents();
 ob_end_clean();
 $notif->add_notif(1,"$msg");

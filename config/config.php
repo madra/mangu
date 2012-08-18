@@ -7,11 +7,14 @@ define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));
 
 //database configuration
-define('DB_NAME', '');
-define('DB_USER', '');
+define('DB_NAME', 'meka_database');
+define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_HOST', '');
-define('DB_DRIVER','');
+define('DB_HOST', 'localhost');
+define('DB_DRIVER','mysql');
+
+//the version of the database class..we have on or two
+define('DRAQL_VERSION',2);
 
 //memcahe configuration
 define('MEMCACHE_HOST','localhost');
@@ -19,7 +22,7 @@ define('MEMCACHE_TTL',20);
 define('MEMCACHE_ENABLED',TRUE);
 
 //create an htaccess file,do this once please!!!!!
-define('GENERATE_HTACCESS',false);
+define('GENERATE_HTACCESS',true);
 
 //file path
 define('BASE_PATH','http://'.$_SERVER['SERVER_NAME'].'/'.array_pop(explode(DS,ROOT)).'/');
@@ -38,6 +41,6 @@ echo
 '
 <script type="text/javascript">
 var BASE_PATH = "'.BASE_PATH.'";
-var SERVER_PATH = "'.BASE_PATH.'server/ma";
+var SERVER_PATH = "'.BASE_PATH.'server/";
 </script>
 ';
