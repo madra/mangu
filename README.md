@@ -8,18 +8,8 @@ Mangu is an easy to use PHP MVC Framework.
 Quick start
 -----------
 
-Clone the repo, `git clone git://github.com/twitter/bootstrap.git`, or [download the latest release](https://github.com/twitter/bootstrap/zipball/master).
-
-
-
-
-
-Bug tracker
------------
-
-Have a bug? Please create an issue here on GitHub! Also, when filing please make sure you're familiar with [necolas's guidelines](https://github.com/necolas/issue-guidelines). thanks! <3
-
-https://github.com/twitter/bootstrap/issues
+Clone the repo, `https://github.com/madra/mangu.git`, or [download the latest release](https://github.com/madra/mangu/downloads).
+Run the install file ...
 
 
 
@@ -38,7 +28,7 @@ Authors
 Copyright and license
 ---------------------
 
-Copyright 2012 Binary Logic, Ltd.
+Copyright 2012 Madra David.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this work except in compliance with the License.
