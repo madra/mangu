@@ -2,6 +2,7 @@
 
 //Dirty hack to generate the htaccess file
 $filename = explode("/",$_SERVER['SCRIPT_NAME']); // THIS WILL BREAK DOWN THE PATH INTO AN ARRAY
+$filename2 = null;
 for( $i = 0; $i < (count($filename) - 2); ++$i ) {
 $filename2 .= $filename[$i].'/';
 }

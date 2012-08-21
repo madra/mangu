@@ -26,7 +26,12 @@ define('GENERATE_HTACCESS',true);
 
 //file path
 define('BASE_PATH','http://'.$_SERVER['SERVER_NAME'].'/'.array_pop(explode(DS,ROOT)).'/');
+
 define('BASE_DIR',$_SERVER['DOCUMENT_ROOT']);
+
+//config directoory holding the config.php
+define('CONFIG_DIR',BASE_DIR.'/config/');
+
 define('STATIC_BASE_PATH',BASE_PATH);
 
 
@@ -36,11 +41,4 @@ define('VERSION',0.2);
 define('SESS_KEY',md5(BASE_PATH));
 
 
-//javascript constants
-echo
-'
-<script type="text/javascript">
-var BASE_PATH = "'.BASE_PATH.'";
-var SERVER_PATH = "'.BASE_PATH.'server/";
-</script>
-';
+define('EXT','.php');
