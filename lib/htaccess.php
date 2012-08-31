@@ -10,6 +10,16 @@ $path = 'http://'.$_SERVER['SERVER_NAME'].''.$filename2;
 ob_start();
 echo
 '
+
+# Protect application and system files from being viewed
+RewriteRule ^(?:config|tpl|lib)\b.* 404.php/$0 [L]
+
+<files class.inc.php>
+Order Deny,Allow
+Deny From All
+</files>
+
+
 <IfModule mod_headers.c>
     Header set X-UA-Compatible "IE=Edge,chrome=1"
     # mod_headers can"t match by content-type, but we don"t want to send this header on *everything*...

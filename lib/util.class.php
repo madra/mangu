@@ -61,6 +61,24 @@ echo'</pre>';
     }
 }
 
+public static function split_str($str,$end,$start = 0,$strext = null)
+{
+           if(strlen($str) > $end)
+           {
+           $msg = substr($str,$start,$end);
+
+ //add an optional str extension...something like $str.....
+                if($strext)
+                {
+                $msg .= "$strext";
+                }
+            return $msg;
+           }else
+           {
+           return $str;
+           }
+
+}
 
 }
 ###
