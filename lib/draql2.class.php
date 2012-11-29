@@ -12,7 +12,7 @@ class draql
 		//initiate the connection
 		 $this->con = Connection::getInstance();
 		 $this->ready = null;
-		 if($this->con->con)
+		 if($this->con->conn)
 		 {
 		 	$this->ready = true;
 		 }	
