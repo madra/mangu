@@ -22,7 +22,7 @@ define('MEMCACHE_TTL',20);
 define('MEMCACHE_ENABLED',TRUE);
 
 //create an htaccess file,do this once please!!!!!
-define('GENERATE_HTACCESS',true);
+define('GENERATE_HTACCESS',false);
 
 //file path
 define('BASE_PATH','http://'.$_SERVER['SERVER_NAME'].'/'.array_pop(explode(DS,ROOT)).'/');

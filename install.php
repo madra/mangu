@@ -52,6 +52,11 @@ else
 		for more information on how to correct the problem.
 	</p>
 
+
+	<p>
+		If you are exploring Mangu for the very first time, you should start by reading the <a href="<?php echo BASE_PATH; ?>user_guide">User Guide</a>.
+	</p>
+
 	<?php $failed = FALSE ?>
 
 	<table cellspacing="0">
