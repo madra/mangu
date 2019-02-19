@@ -1,4 +1,4 @@
-[Mangu MVC Framework](http://madradavid.com) 
+[Mangu MVC Framework](http://madradavid.com)
 =================
 
 Mangu is an easy to use PHP MVC Framework.
@@ -19,7 +19,7 @@ Authors
 **Madra David**
 
 + http://twitter.com/madradavid
-+ http://github.com/madradavid
++ http://github.com/madra
 
 
 
